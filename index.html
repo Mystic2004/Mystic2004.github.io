@@ -1,62 +1,377 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mystic's Blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="style.css">
-    <style>
-     
-    body{
-      background-image: url(images/黑神话悟空\ 雪天\ 树\ 小庙\ 4K壁纸\ 3840x2160_彼岸图网.jpg);
-      background-repeat: no-repeat;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>实训三班今日课表</title>
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      background: linear-gradient(135deg, #eef4ff, #f8fbff);
+      color: #111827;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 520px;
+      max-height: calc(100vh - 28px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.10);
+      overflow: hidden;
+    }
+
+    .today-card {
+      flex: 1;
+      border: 2px solid #2563eb;
+    }
+
+    .card-head {
+      padding: 14px 16px 8px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.2;
+      color: #1d4ed8;
+      font-weight: 800;
+    }
+
+    .meta {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    .today-list {
+      padding: 8px 14px 14px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .today-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      min-height: 58px;
+    }
+
+    .period {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .online {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .offline {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .none {
+      background: #f3f4f6;
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    .tomorrow-card {
+      padding: 12px 14px;
+    }
+
+    .tomorrow-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .tomorrow-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    .tomorrow-meta {
+      margin: 0;
+      font-size: 12px;
+      color: #6b7280;
+      text-align: right;
+      line-height: 1.3;
+    }
+
+    .tomorrow-strip {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .mini {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 8px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mini .mini-badge {
+      font-size: 13px;
+      padding: 3px 7px;
+      border-radius: 999px;
+    }
+
+    .empty {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #6b7280;
+      text-align: center;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    @media (max-height: 620px) {
+      body {
+        padding: 8px;
+      }
+      .app {
+        max-height: calc(100vh - 16px);
+        gap: 8px;
+      }
+      .card-head {
+        padding: 11px 14px 5px;
+      }
+      .title {
+        font-size: 21px;
+      }
+      .meta {
+        font-size: 12px;
+      }
+      .today-list {
+        padding: 6px 12px 12px;
+        gap: 7px;
+      }
+      .today-row {
+        min-height: 50px;
+        padding: 10px 12px;
+      }
+      .period {
+        font-size: 17px;
+      }
+      .badge {
+        min-width: 68px;
+        padding: 6px 12px;
+        font-size: 15px;
+      }
+      .tomorrow-card {
+        padding: 10px 12px;
+      }
+      .tomorrow-top {
+        margin-bottom: 7px;
+      }
+      .mini {
+        padding: 7px 6px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      body {
+        padding: 8px;
+      }
+      .title {
+        font-size: 21px;
+      }
+      .today-row {
+        padding: 11px 12px;
+      }
+      .period {
+        font-size: 17px;
+      }
+      .badge {
+        min-width: 66px;
+        font-size: 15px;
+      }
+      .tomorrow-meta {
+        display: none;
+      }
+      .mini {
+        font-size: 13px;
+        gap: 4px;
+      }
+    }
   </style>
-
 </head>
+<body>
+  <main class="app">
+    <section class="card today-card">
+      <div class="card-head">
+        <h1 class="title">今日课表</h1>
+        <p class="meta" id="todayMeta">正在计算……</p>
+      </div>
+      <div class="today-list" id="todayLessons"></div>
+    </section>
 
+    <section class="card tomorrow-card">
+      <div class="tomorrow-top">
+        <h2 class="tomorrow-title">明日课表</h2>
+        <p class="tomorrow-meta" id="tomorrowMeta">正在计算……</p>
+      </div>
+      <div class="tomorrow-strip" id="tomorrowLessons"></div>
+    </section>
+  </main>
 
+  <script>
+    const schedule = {"第14周": [["上午", "线下", "线下", "无", "线下", "线下", "线下"], ["下午", "无", "线下", "线下", "线下", "无", "无"], ["晚上", "无", "无", "线下", "无", "线下", "无"]], "第15周": [["上午", "线下", "线下", "无", "线下", "线下", "无"], ["下午", "无", "线下", "线下", "线下", "无", "线下"], ["晚上", "无", "无", "线下", "无", "线下", "无"]], "第16周": [["上午", "线下", "线下", "无", "线下", "线下", "无"], ["下午", "无", "线下", "线下", "线下", "无", "线下"], ["晚上", "无", "无", "线下", "无", "线下", "无"]], "第17周": [["上午", "线下", "线下", "线下", "线下", "线下", "线下"], ["下午", "线下", "线下", "线下", "线下", "线下", "线下"], ["晚上", "无", "无", "无", "无", "无", "无"]], "第18周": [["上午", "线下", "线下", "线下", "线下", "线下", "线下"], ["下午", "线下", "线下", "线下", "线下", "线下", "线下"], ["晚上", "无", "无", "无", "无", "无", "无"]], "第19周": [["上午", "线下", "线下", "线下", "线下", "线下", "线下"], ["下午", "线下", "线下", "线下", "线下", "线下", "线下"], ["晚上", "无", "无", "无", "无", "无", "无"]], "第20周": [["上午", "线下", "线下", "线下", "线下", "线下", "线下"], ["下午", "线下", "线下", "线下", "线下", "线下", "线下"], ["晚上", "无", "无", "无", "无", "无", "无"]], "第21周": [["上午", "线下", "线下", "线下", "线下", "线下", "线下"], ["下午", "线下", "线下", "线下", "线下", "线下", "线下"], ["晚上", "无", "无", "无", "无", "无", "无"]]};
+    const baseDate = new Date(2026, 5, 1);
+    const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    const validDays = ["周一", "周二", "周三", "周四", "周五", "周六"];
 
-<body> 
+    function formatDate(date) {
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${m}月${d}日`;
+    }
 
-<header>
-  <img src="images/头像.jpg"alt="头像">
-<h1>Mystic</h1>
-<p><em>Natural Language Processing</em></p>
-    <ul>
-         <li><strong><a href="">博客</a></strong></li>
-         <li><strong><a href="">论文</a></strong></li>
-         <li><strong><a href="">项目</a></strong></li>
-         <li><strong><a href="">奖项</a></strong></li>
-    </ul>
-</header>
+    function badgeClass(text) {
+      if (text === "线上") return "online";
+      if (text === "线下") return "offline";
+      return "none";
+    }
 
-<section class="intro">
-<h1>Self-Intro</h1>
-<h3><strong>刘桦桦</strong></h3>
-<h2>重庆邮电大学 软件工程</h2>
-<h2>2023级在读本科</h2>
-<h2>Email: Mystic2004@126.com</h2>
-<h2>Phone: +86 19183331148</h2>
-<a href="https://github.com/Mystic2004/"><strong>GitHub主页</strong></a>
+    function makeBadge(text) {
+      return `<span class="badge ${badgeClass(text)}">${text}</span>`;
+    }
 
+    function getScheduleForDate(date) {
+      const current = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const diffDays = Math.floor((current - baseDate) / (24 * 60 * 60 * 1000));
+      const weekNumber = 14 + Math.floor(diffDays / 7);
+      const weekKey = `第${weekNumber}周`;
+      const dayName = dayNames[current.getDay()];
 
+      if (diffDays < 0 || !schedule[weekKey] || !validDays.includes(dayName)) {
+        return {
+          dateText: formatDate(current),
+          dayName,
+          weekKey,
+          lessons: [
+            ["上午", "无"],
+            ["下午", "无"],
+            ["晚上", "无"]
+          ]
+        };
+      }
 
+      const dayIndex = validDays.indexOf(dayName) + 1;
+      const lessons = schedule[weekKey].map(row => [row[0], row[dayIndex]]);
+      return {
+        dateText: formatDate(current),
+        dayName,
+        weekKey,
+        lessons
+      };
+    }
 
-</section>
- 
+    function renderToday(date) {
+      const result = getScheduleForDate(date);
+      document.getElementById("todayMeta").textContent =
+        `${result.dateText}｜${result.dayName}｜${result.weekKey}`;
 
+      const box = document.getElementById("todayLessons");
+      box.innerHTML = result.lessons.map(item => `
+        <div class="today-row">
+          <span class="period">${item[0]}</span>
+          ${makeBadge(item[1])}
+        </div>
+      `).join("");
+    }
 
+    function renderTomorrow(date) {
+      const result = getScheduleForDate(date);
+      document.getElementById("tomorrowMeta").textContent =
+        `${result.dateText}｜${result.dayName}｜${result.weekKey}`;
+
+      const validLessons = result.lessons.filter(item => item[1] !== "无");
+      const box = document.getElementById("tomorrowLessons");
+
+      if (validLessons.length === 0) {
+        box.innerHTML = `<div class="empty">明日无课</div>`;
+        return;
+      }
+
+      box.innerHTML = validLessons.map(item => `
+        <div class="mini">
+          <span>${item[0]}</span>
+          <span class="mini-badge ${badgeClass(item[1])}">${item[1]}</span>
+        </div>
+      `).join("");
+    }
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    renderToday(today);
+    renderTomorrow(tomorrow);
+  </script>
 </body>
-
-
-
-
-
-
-
-
 </html>
+
 
